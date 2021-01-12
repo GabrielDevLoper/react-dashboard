@@ -27,7 +27,6 @@ import Badge from "@material-ui/core/Badge";
 import InputBase from "@material-ui/core/InputBase";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import StarBorder from "@material-ui/icons/StarBorder";
 import Collapse from "@material-ui/core/Collapse";
 
 import history from "../../history";
