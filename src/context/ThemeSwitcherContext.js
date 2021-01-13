@@ -1,8 +1,8 @@
 import React, { createContext, useState } from "react";
 
-const ThemeSwitchContext = createContext();
+export const ThemeSwitchContext = createContext();
 
-function ThemeSwitcherProvider({ children }) {
+export function ThemeSwitcherProvider({ children }) {
   const [darkState, setDarkState] = useState(false);
 
   const handleThemeChange = () => {
@@ -15,5 +15,3 @@ function ThemeSwitcherProvider({ children }) {
     </ThemeSwitchContext.Provider>
   );
 }
-
-export { ThemeSwitchContext, ThemeSwitcherProvider };
