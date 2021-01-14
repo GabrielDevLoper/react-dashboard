@@ -28,7 +28,9 @@ import InputBase from "@material-ui/core/InputBase";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
+import { Box, FormControlLabel, Paper, Switch } from "@material-ui/core";
 
+import { useStore } from "../../context/ThemeSwitcherContext";
 import history from "../../history";
 
 const drawerWidth = 240;
@@ -182,6 +184,8 @@ const path = [
 export default function Dashboard({ children }) {
   const classes = useStyles();
   const theme = useTheme();
+  const { darkMode, handleThemeChange } = useStore();
+
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -307,6 +311,7 @@ export default function Dashboard({ children }) {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
+
             <InputBase
               placeholder="Buscar..."
               classes={{
@@ -316,7 +321,10 @@ export default function Dashboard({ children }) {
               inputProps={{ "aria-label": "search" }}
             />
           </div>
+
           <div className={classes.grow} />
+          <Switch checked={darkMode} onChange={handleThemeChange} />
+
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
               <Badge badgeContent={4} color="secondary">
@@ -339,6 +347,7 @@ export default function Dashboard({ children }) {
               <AccountCircle size={20} />
             </IconButton>
           </div>
+
           <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
