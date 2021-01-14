@@ -26,12 +26,12 @@ function ThemeSwitcherProvider({ children }) {
       type: palletType,
       primary: {
         dark: colors.indigo.A700,
-        main: "#ff6f00",
+        main: "#282c34",
         light: colors.indigo.A200,
       },
       secondary: {
         dark: colors.orange.A700,
-        main: colors.orange.A400,
+        main: "#ff1744",
         light: colors.orange.A200,
       },
       background: {
@@ -51,12 +51,12 @@ function ThemeSwitcherProvider({ children }) {
       type: palletType,
       primary: {
         dark: colors.indigo.A700,
-        main: colors.indigo.A400,
+        main: "#3d5afe",
         light: colors.indigo.A200,
       },
       secondary: {
         dark: colors.orange.A700,
-        main: colors.orange.A400,
+        main: "#ff1744",
         light: colors.orange.A200,
       },
       background: {

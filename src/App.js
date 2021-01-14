@@ -5,10 +5,12 @@ import "./App.css";
 import history from "./history";
 
 import { withThemeProvider } from "./context/ThemeSwitcherContext";
+import { CssBaseline } from "@material-ui/core";
 
 function App() {
   return (
     <Router history={history}>
+      <CssBaseline />
       <Routes />
     </Router>
   );
