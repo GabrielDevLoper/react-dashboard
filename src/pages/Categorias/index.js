@@ -8,7 +8,10 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
+import Chip from "@material-ui/core/Chip";
+
 import Dashboard from "../Dashboard";
+import MUIDataTable, { TableFilterList } from "mui-datatables";
 
 const useStyles = makeStyles({
   table: {
@@ -16,49 +19,131 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
+const columns = ["Nome", "Empŕesa", "Cidade", "Estado"];
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
+const data = [
+  ["Joe James", "Test Corp", "Yonkers", "NY"],
+  ["John Walsh", "Test Corp", "Hartford", "CT"],
+  ["Bob Herm", "Test Corp", "Tampa", "FL"],
+  ["James Houston", "Test Corp", "Maceió", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "TS", "TX"],
+  ["James Houston", "Test Corp", "ASDA", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "12312", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "ASD", "TX"],
+  ["James Houston", "Test Corp", "Dallas", "TX"],
+  ["James Houston", "Test Corp", "Dal12312las", "TX"],
+  ["James Houston", "Test Corp", "DSA", "TX"],
+  ["James Houston", "Test Corp", "ASD", "TX"],
+  ["James Houston", "Test Corp", "123", "TX"],
+  ["James Houston", "Test Corp", "TESTE", "TX"],
+  ["James Houston", "Test Corp", "CLIMA", "TX"],
+  ["James Houston", "Test Corp", "Sao jorge", "TX"],
 ];
+
+const options = {
+  filterType: "checkbox",
+  textLabels: {
+    body: {
+      noMatch: "Desculpa, este usuário não foi encontrado",
+      toolTip: "Ordenar",
+      columnHeaderTooltip: (column) => `Sort for ${column.label}`,
+    },
+    pagination: {
+      next: "Proxima Página",
+      previous: "Previous Page",
+      rowsPerPage: "Rows per page:",
+      displayRows: "of",
+    },
+    toolbar: {
+      search: "Buscar",
+      downloadCsv: "Download CSV",
+      print: "Download PDF",
+      viewColumns: "Visualizar Colunas",
+      filterTable: "Filtrar Tabela",
+    },
+    filter: {
+      all: "TODOS",
+      title: "FILTROS",
+      reset: "RESETAR",
+    },
+    viewColumns: {
+      title: "Mostrar Colunas",
+      titleAria: "Mostrar/Esconder Colunas da tabela",
+    },
+    selectedRows: {
+      text: "Linhas Selecionadas",
+      delete: "Deletar",
+      deleteAria: "Deletar Linhas Selecionadas",
+    },
+  },
+};
+
+const CustomChip = ({ label, onDelete }) => {
+  return (
+    <Chip
+      variant="outlined"
+      color="secondary"
+      label={label}
+      onDelete={onDelete}
+    />
+  );
+};
+
+const CustomFilterList = (props) => {
+  return <TableFilterList {...props} ItemComponent={CustomChip} />;
+};
 
 export default function Categorias() {
   const classes = useStyles();
 
   return (
     <Dashboard>
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Dessert (100g serving)</TableCell>
-              <TableCell align="right">Calories</TableCell>
-              <TableCell align="right">Fat&nbsp;(g)</TableCell>
-              <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-              <TableCell align="right">Protein&nbsp;(g)</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.name}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+      <MUIDataTable
+        title={"Tabela de usuários"}
+        data={data}
+        columns={columns}
+        options={options}
+        components={{ TableFilterList: CustomFilterList }}
+      />
     </Dashboard>
   );
 }
