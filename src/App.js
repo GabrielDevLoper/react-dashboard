@@ -6,16 +6,13 @@ import history from "./history";
 
 import { withThemeProvider } from "./context/ThemeSwitcherContext";
 import { CssBaseline } from "@material-ui/core";
-import { DrawerProvider } from "./context/DrawerOpenContext";
 
 function App() {
   return (
-    <DrawerProvider>
-      <Router history={history}>
-        <CssBaseline />
-        <Routes />
-      </Router>
-    </DrawerProvider>
+    <Router history={history}>
+      <CssBaseline />
+      <Routes />
+    </Router>
   );
 }
 
