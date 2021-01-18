@@ -1,35 +1,29 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme, fade } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
+import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
+
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Badge from "@material-ui/core/Badge";
 import InputBase from "@material-ui/core/InputBase";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import Collapse from "@material-ui/core/Collapse";
+
 import { Box, FormControlLabel, Paper, Switch } from "@material-ui/core";
 
+import SideBar from "../../components/Drawer";
+
 import { useStore } from "../../context/ThemeSwitcherContext";
+import { useDrawer } from "../../context/DrawerOpenContext";
+
 import history from "../../history";
 
 const drawerWidth = 240;
@@ -59,19 +53,6 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  hide: {
-    display: "none",
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
   drawerHeader: {
     display: "flex",
     alignItems: "center",
@@ -80,6 +61,13 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: "flex-end",
   },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  hide: {
+    display: "none",
+  },
+
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -152,47 +140,16 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  nested: {
-    paddingLeft: theme.spacing(4),
-  },
 }));
-
-const path = [
-  {
-    id: 1,
-    nome: "Categorias",
-    url: "/Categorias",
-  },
-  {
-    id: 2,
-    nome: "Usuarios",
-    url: "/usuarios",
-  },
-  {
-    id: 3,
-    nome: "Locais",
-    url: "/usuarios",
-  },
-  {
-    id: 4,
-    nome: "Bairros",
-    url: "/usuarios",
-  },
-];
 
 export default function Dashboard({ children }) {
   const classes = useStyles();
-  const theme = useTheme();
   const { darkMode, handleThemeChange } = useStore();
+  const { open, handleDrawer } = useDrawer();
 
-  const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [expand, setExpand] = React.useState(false);
 
-  const handleClickExpand = () => {
-    setExpand(!expand);
-  };
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -211,14 +168,6 @@ export default function Dashboard({ children }) {
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
-  };
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
   };
 
   const handleLogout = (e) => {
@@ -296,7 +245,7 @@ export default function Dashboard({ children }) {
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={handleDrawer}
             edge="start"
             className={clsx(classes.menuButton, open && classes.hide)}
           >
@@ -361,65 +310,9 @@ export default function Dashboard({ children }) {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {/* Nested List Start*/}
-          <ListItem button onClick={handleClickExpand}>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Auxiliares" />
-            {expand ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={expand} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {path.map((path, index) => (
-                <ListItem
-                  button
-                  onClick={() => history.push(`${path.url}`)}
-                  key={path.id}
-                  className={classes.nested}
-                >
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={path.nome} />
-                </ListItem>
-              ))}
-            </List>
-          </Collapse>
-          {/* Nested List End*/}
-        </List>
-        <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
+      {/* Aqui ficará o drawer */}
+      <SideBar />
+      {/* Fim do drawer */}
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,

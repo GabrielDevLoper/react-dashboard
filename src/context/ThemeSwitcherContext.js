@@ -1,10 +1,4 @@
 import React, { createContext, useContext } from "react";
-import {
-  deepOrange,
-  deepPurple,
-  lightBlue,
-  orange,
-} from "@material-ui/core/colors";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { colors } from "@material-ui/core";
 import { useLocalStorage } from "../customHooks/useLocalStorage";
@@ -19,8 +13,6 @@ function ThemeSwitcherProvider({ children }) {
   };
 
   const palletType = darkMode ? "dark" : "light";
-  // const mainPrimaryColor = darkMode ? orange[500] : lightBlue[500];
-  // const mainSecondaryColor = darkMode ? deepOrange[900] : deepPurple[500];
 
   const darkTheme = createMuiTheme({
     palette: {
