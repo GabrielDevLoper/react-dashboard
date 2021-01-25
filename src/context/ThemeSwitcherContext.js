@@ -19,8 +19,6 @@ function ThemeSwitcherProvider({ children }) {
   };
 
   const palletType = darkMode ? "dark" : "light";
-  // const mainPrimaryColor = darkMode ? orange[500] : lightBlue[500];
-  // const mainSecondaryColor = darkMode ? deepOrange[900] : deepPurple[500];
 
   const darkTheme = createMuiTheme({
     palette: {
